@@ -1,0 +1,28 @@
+.tracker-box {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.6s ease-in-out;
+  overflow: hidden;
+}
+
+.tracker-box.shrink-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  padding: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.tracker-box.shrink-wrap textarea,
+.tracker-box.shrink-wrap button,
+.tracker-box.shrink-wrap div {
+  display: none;
+}
