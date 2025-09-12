@@ -1,4 +1,4 @@
-import {db} from "../firebase/firebase";
+import { db } from "../firebase/firebase";
 import React, { useState, useEffect } from "react";
 import {
   collection,
@@ -7,17 +7,25 @@ import {
   query,
   orderBy,
 } from "firebase/firestore";
-
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from "recharts";
 
 export default function Tracker() {
-  const [mood, setMood] = useState(null);
+  const [selectedMoods, setSelectedMoods] = useState([]);
   const [journal, setJournal] = useState("");
+  const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
   const [history, setHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
 
   const moodsCollection = collection(db, "moods");
 
-  // Load mood history from Firebase
   useEffect(() => {
     const fetchMoods = async () => {
       const q = query(moodsCollection, orderBy("timestamp", "desc"));
@@ -31,9 +39,32 @@ export default function Tracker() {
     fetchMoods();
   }, []);
 
-  // Save today’s entry
+  const handleMoodClick = (mood) => {
+    if (selectedMoods.includes(mood)) {
+      setSelectedMoods(selectedMoods.filter((m) => m !== mood));
+    } else if (selectedMoods.length < 2) {
+      setSelectedMoods([...selectedMoods, mood]);
+      setError("");
+    } else {
+      setError("⚠️ You can only select 2 moods per day.");
+    }
+  };
+
+  const handleJournalChange = (e) => {
+    const words = e.target.value.trim().split(/\s+/);
+    if (words.length <= 20) {
+      setJournal(e.target.value);
+      setError("");
+    } else {
+      setError("⚠️ Journal entry cannot exceed 20 words.");
+    }
+  };
+
   const handleSave = async () => {
-    if (!mood) return;
+    if (selectedMoods.length === 0) {
+      setError("⚠️ Please select at least 1 mood.");
+      return;
+    }
 
     const today = new Date().toLocaleDateString("en-GB", {
       day: "2-digit",
@@ -44,44 +75,73 @@ export default function Tracker() {
     try {
       await addDoc(moodsCollection, {
         date: today,
-        mood,
+        moods: selectedMoods,
         journal,
         timestamp: new Date(),
       });
 
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
+      setSelectedMoods([]);
       setJournal("");
 
-      // Reload moods
       const snapshot = await getDocs(query(moodsCollection, orderBy("timestamp", "desc")));
-      const moodData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      const moodData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
       setHistory(moodData);
-
-    } catch (error) {
-      console.error("Error saving mood:", error);
+    } catch (err) {
+      console.error("Error saving mood:", err);
     }
   };
 
+  const moodCounts = history.reduce((acc, entry) => {
+    entry?.moods?.forEach((m) => {
+      acc[m] = (acc[m] || 0) + 1;
+    });
+    return acc;
+  }, {});
+
+  const totalMoods = Object.values(moodCounts).reduce((a, b) => a + b, 0);
+
+  const chartData = [
+    { mood: "happy", emoji: "😊", value: moodCounts["happy"] || 0 },
+    { mood: "neutral", emoji: "😐", value: moodCounts["neutral"] || 0 },
+    { mood: "sad", emoji: "😞", value: moodCounts["sad"] || 0 },
+    { mood: "excited", emoji: "🤩", value: moodCounts["excited"] || 0 },
+    { mood: "angry", emoji: "😡", value: moodCounts["angry"] || 0 },
+  ];
+
+  const COLORS = ["#34d399", "#fbbf24", "#f87171", "#ec4899", "#f97316"];
+
   return (
-    <section className="w-full py-16 px-6 bg-gradient-to-br from-sky-50 via-indigo-50 to-purple-50">
-      <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl font-extrabold font-[Poppins] text-sky-700 mb-6">
+    <section className="w-full py-16 px-6 bg-gradient-to-br from-sky-50 via-indigo-50 to-purple-100 min-h-screen">
+      <div className="max-w-5xl mx-auto text-center bg-white shadow-2xl rounded-3xl p-10">
+        {/* Title */}
+        <h2 className="text-4xl font-extrabold text-sky-700 mb-3 drop-shadow-sm">
           🌸 Mood Tracker & Journal
         </h2>
+        <p className="text-gray-600 mb-8">
+          Select your mood, jot down your thoughts, and see your emotional trends.
+        </p>
 
-         {/* Mood Options */}
+        {/* Mood Selection */}
         <div className="flex justify-center gap-6 mb-8 flex-wrap">
           {[
-            { mood: "happy", emoji: "😊", color: "bg-green-200", hover: "hover:bg-green-100" },
-            { mood: "neutral", emoji: "😐", color: "bg-yellow-200", hover: "hover:bg-yellow-100" },
-            { mood: "sad", emoji: "😞", color: "bg-red-200", hover: "hover:bg-red-100" },
+            { mood: "happy", emoji: "😊", color: "bg-green-300" },
+            { mood: "neutral", emoji: "😐", color: "bg-yellow-300" },
+            { mood: "sad", emoji: "😞", color: "bg-red-300" },
+            { mood: "excited", emoji: "🤩", color: "bg-pink-300" },
+            { mood: "angry", emoji: "😡", color: "bg-orange-300" },
           ].map((item, i) => (
             <button
               key={i}
-              onClick={() => setMood(item.mood)}
-              className={`p-6 rounded-2xl shadow-md text-4xl transition-all duration-300 transform
-                ${mood === item.mood ? `${item.color} scale-110 animate-bounce` : `bg-white ${item.hover}`}
+              onClick={() => handleMoodClick(item.mood)}
+              className={`p-6 rounded-2xl shadow-md text-5xl transition-all duration-300 
+                ${selectedMoods.includes(item.mood)
+                  ? `${item.color} scale-110 ring-4 ring-offset-2 ring-sky-400`
+                  : "bg-gray-50 hover:bg-gray-100"}
               `}
             >
               {item.emoji}
@@ -92,50 +152,105 @@ export default function Tracker() {
         {/* Journal Input */}
         <textarea
           value={journal}
-          onChange={(e) => setJournal(e.target.value)}
-          placeholder="Write your thoughts here..."
-          className="w-full max-w-2xl mx-auto p-4 rounded-xl border border-gray-200 shadow-sm 
-          focus:outline-none focus:ring-2 focus:ring-sky-300 font-[Inter] text-lg"
+          onChange={handleJournalChange}
+          placeholder="✍️ Write your thoughts (max 20 words)..."
+          className="w-full max-w-2xl mx-auto p-4 rounded-xl border border-gray-200 shadow-md 
+          focus:ring-4 focus:ring-sky-300 focus:outline-none text-lg resize-none"
           rows="4"
         />
+        {error && <p className="text-red-500 mt-2 text-sm">{error}</p>}
 
         {/* Save Button */}
         <div className="mt-6">
           <button
             onClick={handleSave}
-            className="px-6 py-3 bg-gradient-to-r from-sky-400 to-blue-600 text-white rounded-xl 
-            shadow-md font-semibold hover:opacity-90 transition-all duration-300"
+            disabled={selectedMoods.length === 0 || error}
+            className="px-8 py-3 bg-gradient-to-r from-sky-400 to-blue-600 text-white rounded-full 
+            shadow-lg font-semibold hover:opacity-90 transition disabled:opacity-50"
           >
             Save Entry
           </button>
           {saved && (
-            <p className="text-green-600 mt-3 font-medium animate-fadeIn">
-              ✅ Saved!
-            </p>
+            <p className="text-green-600 mt-3 font-medium animate-pulse">✅ Saved!</p>
           )}
         </div>
 
-        {/* Calendar History */}
-        {history.length > 0 && (
-          <div className="mt-14">
-            <h3 className="text-2xl font-bold text-sky-700 mb-6 text-center">
-              📅 Mood Calendar
+        {/* Mood Donut Chart */}
+        {totalMoods > 0 && (
+          <div className="mt-12">
+            <h3 className="text-2xl font-bold text-sky-700 mb-4">
+              📊 Mood Distribution
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
+            <div className="bg-gray-50 rounded-2xl p-6 shadow-inner">
+              <ResponsiveContainer width="100%" height={320}>
+                <PieChart>
+                  <Pie
+                    data={chartData}
+                    dataKey="value"
+                    nameKey="emoji"
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={80}
+                    outerRadius={130}
+                    paddingAngle={3}
+                    label={({ emoji, value }) =>
+                      value > 0 ? `${emoji} ${(value / totalMoods * 100).toFixed(1)}%` : ""
+                    }
+                  >
+                    {chartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(val, name, props) => [`${val} times`, props.payload.emoji]} />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        )}
+
+        {/* History Toggle */}
+        <div className="mt-12">
+          <button
+            onClick={() => setShowHistory(!showHistory)}
+            className="px-8 py-3 bg-indigo-500 text-white rounded-full shadow-lg font-semibold hover:bg-indigo-600 transition"
+          >
+            {showHistory ? "🙈 Hide History" : "📅 See Your History"}
+          </button>
+        </div>
+
+        {/* History Section */}
+        {showHistory && history.length > 0 && (
+          <div className="mt-10 text-left">
+            <h3 className="text-2xl font-bold text-sky-700 mb-6 text-center">
+              📔 Your Mood Journal
+            </h3>
+            <div className="grid md:grid-cols-2 gap-6">
               {history.map((entry) => (
                 <div
                   key={entry.id}
-                  className="relative group bg-white rounded-xl shadow-md p-4 flex flex-col items-center justify-center hover:shadow-lg transition-all duration-300"
+                  className="bg-white rounded-2xl shadow-md p-5 hover:shadow-xl transition"
                 >
-                  <p className="text-sm text-gray-500 font-[Inter]">{entry.date}</p>
-                  <p className="text-3xl mt-2">
-                    {entry.mood === "happy" ? "😊" : entry.mood === "neutral" ? "😐" : "😞"}
+                  <p className="text-gray-500 text-sm">{entry?.date || "Unknown date"}</p>
+                  <p className="text-2xl mt-2">
+                    {entry?.moods?.map((m, i) => (
+                      <span key={i} className="mr-2">
+                        {m === "happy"
+                          ? "😊"
+                          : m === "neutral"
+                          ? "😐"
+                          : m === "sad"
+                          ? "😞"
+                          : m === "excited"
+                          ? "🤩"
+                          : "😡"}
+                      </span>
+                    ))}
                   </p>
-
-                  {entry.journal && (
-                    <div className="absolute bottom-[-100%] opacity-0 group-hover:opacity-100 group-hover:bottom-[-110%] transition-all duration-300 bg-sky-100 text-gray-700 text-sm p-3 rounded-xl shadow-md w-48 font-[Inter]">
+                  {entry?.journal && (
+                    <p className="mt-3 text-gray-700 bg-gray-50 p-3 rounded-lg">
                       {entry.journal}
-                    </div>
+                    </p>
                   )}
                 </div>
               ))}
