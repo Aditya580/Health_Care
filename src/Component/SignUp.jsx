@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { auth,db} from "../firebase/firebase";
+
+
 
 const maleAvatars = ["male1.jpg", "male2.jpg", "male3.jpg"];
 const femaleAvatars = ["female1.png", "female2.png", "female3.png"];
@@ -14,8 +17,7 @@ export default function SignUpPage() {
     const [avatar, setAvatar] = useState(maleAvatars[0]);
     const [error, setError] = useState("");
 
-    const auth = getAuth();
-    const db = getFirestore();
+    
     const navigate = useNavigate();
 
     const generateUsername = async () => {
