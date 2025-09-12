@@ -40,8 +40,8 @@ export default function Navbar() {
             <div className="flex space-x-12 font-medium font-[Poppins] text-white/90">
               {[
                 { href: "#home", label: "Home" },
-                { href: "#about", label: "About" },
-                { href: "#blog", label: "Blog" },
+                { href: "/activity", label: "Activity" },
+                { href: "/community", label: "Community" },
                 { href: "#contact", label: "Contact" },
               ].map((item, idx) => (
                 <a
@@ -117,11 +117,11 @@ export default function Navbar() {
           <a href="#home" className="flex items-center gap-2 hover:text-sky-200 transition-colors">
             <FontAwesomeIcon icon={faHome} /> Home
           </a>
-          <a href="#about" className="flex items-center gap-2 hover:text-sky-200 transition-colors">
-            <FontAwesomeIcon icon={faInfoCircle} /> About
+          <a href="#activity" className="flex items-center gap-2 hover:text-sky-200 transition-colors">
+            <FontAwesomeIcon icon={faInfoCircle} /> Activity
           </a>
           <a href="#blog" className="flex items-center gap-2 hover:text-sky-200 transition-colors">
-            <FontAwesomeIcon icon={faBlog} /> Blog
+            <FontAwesomeIcon icon={faBlog} /> Community
           </a>
           <a href="#contact" className="flex items-center gap-2 hover:text-sky-200 transition-colors">
             <FontAwesomeIcon icon={faEnvelope} /> Contact

@@ -90,7 +90,7 @@ export default function Dashboard() {
 
     return (
         <>
-            <div className="flex flex-col gap-5">
+            <div id="activity" className=" flex flex-col gap-5">
                 {/* Buttons Group */}
                 <div className="button-group flex flex-wrap justify-center items-center gap-4 mt-18 ">
                     <button

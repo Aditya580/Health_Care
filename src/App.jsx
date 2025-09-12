@@ -2,11 +2,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Navbar from "./Component/Navbar";
 import Hero from "./Component/Hero";
-import Activities from "./Component/Activities.jsx";
 import Tips from "./Component/Tips.jsx";
 import Draw from "./Component/Draw.jsx";
 import Tracker from "./Component/Tracker";
+import Activities from "./Component/Activities.jsx"
 import Footer from "./Component/Footer.jsx";
+import Community from "./Component/Community.jsx";
 import ScrollToTop from "./Component/ScrollToTop.jsx";
 import { useIsVisible } from "./hooks/useIsVisible.jsx";
 import { useRef } from "react";
@@ -64,6 +65,10 @@ function App() {
                     <Route path="/stories/:id" element={<><StoryDetailPage /><Footer /></>} />
                     <Route path="/movies" element={<><MovieRecommender /><Footer /></>} />
                     <Route path="/draw" element={<><Draw /><Footer /></>} />
+                    <Route path="/community" element={<><Community /><Footer /></>} />
+
+                    <Route path="/activity" element={<><Activities /><Footer /></>} />
+
                     <Route path="/movies/genre/:genreId" element={<><MovieGenreList /><Footer /></>} />
 
                     {/* Game: only loads when /tetris is visited */}
