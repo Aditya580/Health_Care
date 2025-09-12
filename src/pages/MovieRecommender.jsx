@@ -13,7 +13,7 @@ const genres = [
     {id: 28, name: "Action"},
     {id: 35, name: "Comedy"},
     {id: 16, name: "Animation"},
-    {id: 18, name: "Drama"},
+    
 ];
 
 function MovieRecommender() {

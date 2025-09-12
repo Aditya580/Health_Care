@@ -24,7 +24,7 @@ export default function Dashboard() {
             title: "Wheel",
             message: "Spin the wheel to do something fun.",
             buttonText: "Spin",
-            category: "fun",
+            category: "task",
             action: () => setShowWheel(true),
         },
         {
@@ -72,7 +72,7 @@ export default function Dashboard() {
             title: "Vibe Fest",
             message: "Vibe with the magical flow of music.",
             buttonText: "Vibe",
-            category: "Entertainment",
+            category: "fun",
             action : () => setShowDanceParty(true)
         },
         {
@@ -83,14 +83,7 @@ export default function Dashboard() {
             category: "fun",
             action:()=> navigate("/draw"),
         },
-        {
-            image: "png/tetris.png",
-            title: "Tetris",
-            message: "Take a break and play Tetris to reset.",
-            buttonText: "Play",
-            category: "fun",
-            action: () => window.open("/tetris", "_blank"),
-        },
+        
     ];
 
     const filteredCards = activeFilter === "all" ? cards : cards.filter((c) => c.category === activeFilter);
@@ -107,7 +100,7 @@ export default function Dashboard() {
                         Show All
                     </button>
                     <button
-                        onClick={() => setActiveFilter("fun")}
+                        onClick={() => setActiveFilter("task")}
                         className="rounded-full border border-gray-700 bg-transparent text-black py-2 px-4 font-[Nunito] hover:bg-gray-100 transition cursor-pointer"
                     >
                         🎡 Spin The Wheel
@@ -124,12 +117,14 @@ export default function Dashboard() {
                     >
                         🎬 Movies and Stories
                     </button>
+
                     <button
-                        onClick={() => setActiveFilter("nature")}
+                        onClick={() => setActiveFilter("fun")}
                         className="rounded-full border border-gray-700 bg-transparent text-black py-2 px-4 font-[Nunito] hover:bg-gray-100 transition cursor-pointer"
                     >
-                        🌳 Nature & Mindfulness
+                        ✨ Spark
                     </button>
+                    
                 </div>
 
                 {/* Cards */}

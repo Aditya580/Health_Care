@@ -2,6 +2,9 @@ import {useEffect, useRef, useState} from "react";
 import ChatBotIcon from "./ChatBotIcon";
 import ChatForm from "./ChatForm";
 import ChatMessage from "./ChatMessage";
+import faqData from "./faqData.json";
+import siteData from "./siteData.json";
+
 import "./ChatBot.css";
 
 function ChatBot() {
@@ -13,7 +16,32 @@ function ChatBot() {
         const updateHistory = (text) => {
             setChatHistory((prev) => [...prev.filter((msg) => msg.text !== "Thinking..."), {role: "model", text}]);
         };
-        // 🔁 Add the system message
+
+        // 👉 Check local JSON data first (siteData → faqData)
+        const userLastMessage = history[history.length - 1].text.toLowerCase();
+
+        // 1️⃣ Check siteData (features & activities)
+        let matchedAnswer = null;
+        for (const [key, value] of Object.entries(siteData)) {
+            if (userLastMessage.includes(key.toLowerCase())) {
+                matchedAnswer = value;
+                break;
+            }
+        }
+
+        // 2️⃣ If no match, check faqData
+        if (!matchedAnswer) {
+            const matchedFaq = faqData.find((faq) => userLastMessage.includes(faq.question.toLowerCase()));
+            if (matchedFaq) matchedAnswer = matchedFaq.answer;
+        }
+
+        // 3️⃣ If a local answer is found, return it immediately
+        if (matchedAnswer) {
+            updateHistory(matchedAnswer);
+            return; // skip Gemini call
+        }
+
+        // 🔁 Continue with Gemini API call if no local match
         const systemMessage = {
             role: "user",
             parts: [
@@ -28,18 +56,16 @@ You are HealthMate, a friendly and knowledgeable health assistant for the websit
   - Common questions are answered at /faq.
   - For support, direct users to /contact or support@mindease.com.
 If unsure, kindly ask the user to check the appropriate section of the site.
-            `.trim(),
+                `.trim(),
                 },
             ],
         };
 
-        // 🛠️ Convert history to Gemini format
         const formattedHistory = history.map(({role, text}) => ({
             role,
             parts: [{text}],
         }));
 
-        // 🧠 Inject system prompt at the beginning
         const contents = [systemMessage, ...formattedHistory];
 
         const requestOptions = {

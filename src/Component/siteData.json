@@ -1,0 +1,16 @@
+{
+  "wheel": "The Wheel is a fun activity where you can spin to get random tasks or activities to try.",
+  "meditation": "Our Meditation section helps you find inner peace with guided meditation exercises.",
+  "breathe": "The Breathe feature guides you through deep breathing exercises to relax your mind and body.",
+  "nap": "The Nap option encourages short naps to recharge and refresh yourself.",
+  "movies": "We provide a curated list of calming and feel-good movies for relaxation.",
+  "stories": "In Stories, you can read inspiring and motivational content to lift your mood.",
+  "vibe fest": "Vibe Fest lets you enjoy music and dance freely to reduce stress.",
+  "drawing": "The Drawing activity helps you express creativity and reduce stress through art.",
+  "categories": {
+    "task": "Task activities like Spin the Wheel give you engaging challenges.",
+    "relax": "Relaxation activities include meditation, breathing, and short naps.",
+    "media": "Media activities include calming movies and motivational stories.",
+    "fun": "Fun activities like Vibe Fest and Drawing keep your spirit light and creative."
+  }
+}
