@@ -71,7 +71,6 @@ function App() {
                         }
                     />
 
-<<<<<<< HEAD
                     <Route path="/stories" element={<><Navbar /><StoriesPage /><Footer /></>} />
                     <Route path="/stories/:id" element={<><StoryDetailPage /><Footer /></>} />
                     <Route path="/movies" element={<><MovieRecommender /><Footer /></>} />
@@ -81,11 +80,6 @@ function App() {
                     <Route path="/activity" element={<><Activities /><Footer /></>} />
 
                     <Route path="/movies/genre/:genreId" element={<><MovieGenreList /><Footer /></>} />
-=======
-                    {/* Login & SignUp */}
-                    <Route path="/signin" element={<Login />} />
-                    <Route path="/signup" element={<SignUp />} />
->>>>>>> aaa66e268e804291449da0004c6fbd82feece000
 
                     {/* Other pages */}
                     <Route
