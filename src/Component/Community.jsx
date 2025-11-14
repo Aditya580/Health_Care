@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FaUserCircle, FaPaperPlane } from "react-icons/fa";
 import { db } from "../firebase/firebase"; // adjust path if needed
 import {

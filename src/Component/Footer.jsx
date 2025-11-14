@@ -3,7 +3,7 @@ import {faFacebookF, faTwitter, faInstagram, faLinkedinIn} from "@fortawesome/fr
 
 export default function Footer() {
     return (
-        <footer className="bg-[#E7E7E7] text-gray-700 border-t border-gray-200">
+        <footer className="w-full bg-[#E7E7E7] text-gray-700 border-t border-gray-200">
             <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1  md:grid-cols-3 gap-8">
                 {/* Brand Section */}
                 <div>

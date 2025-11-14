@@ -5,14 +5,12 @@ import Hero from "./Component/Hero";
 import Tips from "./Component/Tips.jsx";
 import Draw from "./Component/Draw.jsx";
 import Tracker from "./Component/Tracker";
-import Activities from "./Component/Activities.jsx"
+import Activities from "./Component/Activities.jsx";
 import Footer from "./Component/Footer.jsx";
 import Community from "./Component/Community.jsx";
 import ScrollToTop from "./Component/ScrollToTop.jsx";
 import {useIsVisible} from "./hooks/useIsVisible.jsx";
 import {useRef} from "react";
-import Login from "./Component/Login.jsx";
-import SignUp from "./Component/SignUp.jsx";
 import ChatBot from "./Component/ChatBot.jsx";
 
 // Lazy imports for heavy routes
@@ -71,15 +69,72 @@ function App() {
                         }
                     />
 
-                    <Route path="/stories" element={<><Navbar /><StoriesPage /><Footer /></>} />
-                    <Route path="/stories/:id" element={<><StoryDetailPage /><Footer /></>} />
-                    <Route path="/movies" element={<><MovieRecommender /><Footer /></>} />
-                    <Route path="/draw" element={<><Draw /><Footer /></>} />
-                    <Route path="/community" element={<><Community /><Footer /></>} />
+                    <Route
+                        path="/stories"
+                        element={
+                            <>
+                                <Navbar />
+                                <StoriesPage />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/stories/:id"
+                        element={
+                            <>
+                                <StoryDetailPage />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/movies"
+                        element={
+                            <>
+                                <MovieRecommender />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/draw"
+                        element={
+                            <>
+                                <Draw />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/community"
+                        element={
+                            <>
+                                <Community />
+                                <Footer />
+                            </>
+                        }
+                    />
 
-                    <Route path="/activity" element={<><Activities /><Footer /></>} />
+                    <Route
+                        path="/activity"
+                        element={
+                            <>
+                                <Activities />
+                                <Footer />
+                            </>
+                        }
+                    />
 
-                    <Route path="/movies/genre/:genreId" element={<><MovieGenreList /><Footer /></>} />
+                    <Route
+                        path="/movies/genre/:genreId"
+                        element={
+                            <>
+                                <MovieGenreList />
+                                <Footer />
+                            </>
+                        }
+                    />
 
                     {/* Other pages */}
                     <Route

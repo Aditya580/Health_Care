@@ -83,6 +83,14 @@ export default function Dashboard() {
             category: "fun",
             action:()=> navigate("/draw"),
         },
+        {
+            image: "png/tetris.png",
+            title: "Tetris",
+            message: "Take a break and play Tetris to reset.",
+            buttonText: "Play",
+            category: "fun",
+            action: () => window.open("/tetris", "_blank"),
+        },
         
     ];
 

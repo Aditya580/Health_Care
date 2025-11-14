@@ -37,7 +37,7 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex flex-1 justify-center">
+          <div className="hidden md:flex flex-1 justify-end">
             <div className="flex space-x-12 font-medium font-[Poppins] text-white/90">
               {[
                 { href: "#home", label: "Home" },
@@ -58,7 +58,7 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Buttons / Profile */}
-          <div className="hidden md:flex items-center gap-4">
+          {/* <div className="hidden md:flex items-center gap-4">
             {!user ? (
               <>
                 <button
@@ -92,7 +92,7 @@ export default function Navbar() {
                 </button>
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
