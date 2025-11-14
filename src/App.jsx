@@ -20,7 +20,7 @@ const StoriesPage = lazy(() => import("./pages/StoriesPage.jsx"));
 const StoryDetailPage = lazy(() => import("./pages/StoryDetailPage.jsx"));
 const MovieRecommender = lazy(() => import("./pages/MovieRecommender.jsx"));
 const MovieGenreList = lazy(() => import("./pages/MovieGenreList.jsx"));
-const Tetris = lazy(() => import("./games/Tetris/components/Tetris.jsx"));
+// const Tetris = lazy(() => import("./games/Tetris/components/Tetris.jsx"));
 
 function SectionWrapper({children}) {
     const ref = useRef();
@@ -47,92 +47,33 @@ function App() {
             <ScrollToTop />
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
-                    {/* Main site */}
+                    {/* Home */}
                     <Route
                         path="/"
                         element={
                             <div className="flex flex-col items-center">
                                 <Navbar />
-                                <SectionWrapper>
-                                    <Hero />
-                                </SectionWrapper>
-                                <SectionWrapper>
-                                    <Activities />
-                                </SectionWrapper>
-                                <SectionWrapper>
-                                    <Tips />
-                                </SectionWrapper>
-                                <SectionWrapper>
-                                    <Tracker />
-                                </SectionWrapper>
+                                <SectionWrapper><Hero /></SectionWrapper>
+                                <SectionWrapper><Activities /></SectionWrapper>
+                                <SectionWrapper><Tips /></SectionWrapper>
+                                <SectionWrapper><Tracker /></SectionWrapper>
                                 <Footer />
                                 <ChatBot />
                             </div>
                         }
                     />
 
+                    {/* Pages */}
                     <Route path="/stories" element={<><Navbar /><StoriesPage /><Footer /></>} />
                     <Route path="/stories/:id" element={<><StoryDetailPage /><Footer /></>} />
+
                     <Route path="/movies" element={<><MovieRecommender /><Footer /></>} />
+                    <Route path="/movies/genre/:genreId" element={<><MovieGenreList /><Footer /></>} />
+
                     <Route path="/draw" element={<><Draw /><Footer /></>} />
                     <Route path="/community" element={<><Community /><Footer /></>} />
 
                     <Route path="/activity" element={<><Activities /><Footer /></>} />
-                    
-
-
-                    <Route path="/movies/genre/:genreId" element={<><MovieGenreList /><Footer /></>} />
-
-                    {/* Other pages */}
-                    <Route
-                        path="/stories"
-                        element={
-                            <>
-                                <Navbar />
-                                <StoriesPage />
-                                <Footer />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="/stories/:id"
-                        element={
-                            <>
-                                <StoryDetailPage />
-                                <Footer />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="/movies"
-                        element={
-                            <>
-                                <MovieRecommender />
-                                <Footer />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="/draw"
-                        element={
-                            <>
-                                <Draw />
-                                <Footer />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="/movies/genre/:genreId"
-                        element={
-                            <>
-                                <MovieGenreList />
-                                <Footer />
-                            </>
-                        }
-                    />
-
-                    {/* Game */}
-                    <Route path="/tetris" element={<Tetris />} />
                 </Routes>
             </Suspense>
         </Router>
