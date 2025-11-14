@@ -45,24 +45,16 @@ function App() {
             <ScrollToTop />
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
-                    {/* Main site */}
+                    {/* Home */}
                     <Route
                         path="/"
                         element={
                             <div className="flex flex-col items-center">
                                 <Navbar />
-                                <SectionWrapper>
-                                    <Hero />
-                                </SectionWrapper>
-                                <SectionWrapper>
-                                    <Activities />
-                                </SectionWrapper>
-                                <SectionWrapper>
-                                    <Tips />
-                                </SectionWrapper>
-                                <SectionWrapper>
-                                    <Tracker />
-                                </SectionWrapper>
+                                <SectionWrapper><Hero /></SectionWrapper>
+                                <SectionWrapper><Activities /></SectionWrapper>
+                                <SectionWrapper><Tips /></SectionWrapper>
+                                <SectionWrapper><Tracker /></SectionWrapper>
                                 <Footer />
                                 <ChatBot />
                             </div>
