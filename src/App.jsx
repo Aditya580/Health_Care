@@ -131,6 +131,8 @@ function App() {
 
                     <Route path="/draw" element={<><Draw /><Footer /></>} />
                     <Route path="/community" element={<><Community /><Footer /></>} />
+                    <Route path="/contact" element={<><Contact /><Footer /></>} />
+
 
                     <Route path="/activity" element={<><Activities /><Footer /></>} />
                 </Routes>

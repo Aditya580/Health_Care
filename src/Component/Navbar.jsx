@@ -120,19 +120,19 @@ export default function Navbar() {
             <FontAwesomeIcon icon={faHome} /> Home
           </a>
           <a
-            href="#activity"
+            href="/activity"
             className="flex items-center gap-2 hover:text-sky-200 transition-colors"
           >
             <FontAwesomeIcon icon={faInfoCircle} /> Activity
           </a>
           <a
-            href="#community"
+            href="/community"
             className="flex items-center gap-2 hover:text-sky-200 transition-colors"
           >
             <FontAwesomeIcon icon={faBlog} /> Community
           </a>
           <a
-            href="#contact"
+            href="/contact"
             className="flex items-center gap-2 hover:text-sky-200 transition-colors"
           >
             <FontAwesomeIcon icon={faEnvelope} /> Contact
