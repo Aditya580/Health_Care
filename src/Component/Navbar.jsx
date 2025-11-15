@@ -34,7 +34,7 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex flex-1 justify-center">
+          <div className="hidden md:flex flex-1 justify-end">
             <div className="flex space-x-12 font-medium font-[Poppins] text-white/90">
               {[
                 { href: "#home", label: "Home" },
@@ -54,9 +54,29 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Desktop Profile Only */}
-          <div className="hidden md:flex items-center gap-4">
-            {user && (
+          {/* Desktop Buttons / Profile */}
+          {/* <div className="hidden md:flex items-center gap-4">
+            {!user ? (
+              <>
+                <button
+                  onClick={() => navigate("/signin")}
+                  className="px-4 py-2 font-[Poppins] font-semibold text-white 
+                    bg-white/20 backdrop-blur-md rounded-lg border border-white/30 
+                    hover:bg-white/30 transition-all duration-300"
+                >
+                  Sign In
+                </button>
+                <button
+                  onClick={() => navigate("/signup")}
+                  className="px-4 py-2 font-[Poppins] font-semibold text-white 
+                    bg-gradient-to-r from-sky-400/70 to-blue-600/70 backdrop-blur-md 
+                    rounded-lg border border-white/30 hover:from-sky-500/80 hover:to-blue-700/80 
+                    transition-all duration-300"
+                >
+                  Sign Up
+                </button>
+              </>
+            ) : (
               <div className="flex items-center gap-2">
                 <FontAwesomeIcon icon={faUser} className="text-white" />
                 <span className="text-white font-medium">{user.name}</span>
@@ -69,7 +89,7 @@ export default function Navbar() {
                 </button>
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">

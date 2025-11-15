@@ -5,14 +5,12 @@ import Hero from "./Component/Hero";
 import Tips from "./Component/Tips.jsx";
 import Draw from "./Component/Draw.jsx";
 import Tracker from "./Component/Tracker";
-import Activities from "./Component/Activities.jsx"
+import Activities from "./Component/Activities.jsx";
 import Footer from "./Component/Footer.jsx";
 import Community from "./Component/Community.jsx";
 import ScrollToTop from "./Component/ScrollToTop.jsx";
 import {useIsVisible} from "./hooks/useIsVisible.jsx";
 import {useRef} from "react";
-import Login from "./Component/Login.jsx";
-import SignUp from "./Component/SignUp.jsx";
 import ChatBot from "./Component/ChatBot.jsx";
 import Contact from "./Component/Contact.jsx";
 
@@ -21,7 +19,7 @@ const StoriesPage = lazy(() => import("./pages/StoriesPage.jsx"));
 const StoryDetailPage = lazy(() => import("./pages/StoryDetailPage.jsx"));
 const MovieRecommender = lazy(() => import("./pages/MovieRecommender.jsx"));
 const MovieGenreList = lazy(() => import("./pages/MovieGenreList.jsx"));
-// const Tetris = lazy(() => import("./games/Tetris/components/Tetris.jsx"));
+const Tetris = lazy(() => import("./games/Tetris/components/Tetris.jsx"));
 
 function SectionWrapper({children}) {
     const ref = useRef();
@@ -64,17 +62,75 @@ function App() {
                         }
                     />
 
-                    {/* Pages */}
-                    <Route path="/stories" element={<><Navbar /><StoriesPage /><Footer /></>} />
-                    <Route path="/stories/:id" element={<><StoryDetailPage /><Footer /></>} />
+                    <Route
+                        path="/stories"
+                        element={
+                            <>
+                                <Navbar />
+                                <StoriesPage />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/stories/:id"
+                        element={
+                            <>
+                                <StoryDetailPage />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/movies"
+                        element={
+                            <>
+                                <MovieRecommender />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/draw"
+                        element={
+                            <>
+                                <Draw />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/community"
+                        element={
+                            <>
+                                <Community />
+                                <Footer />
+                            </>
+                        }
+                    />
 
-                    <Route path="/movies" element={<><MovieRecommender /><Footer /></>} />
-                    <Route path="/movies/genre/:genreId" element={<><MovieGenreList /><Footer /></>} />
+                    <Route
+                        path="/activity"
+                        element={
+                            <>
+                                <Activities />
+                                <Footer />
+                            </>
+                        }
+                    />
+
+                    <Route
+                        path="/movies/genre/:genreId"
+                        element={
+                            <>
+                                <MovieGenreList />
+                                <Footer />
+                            </>
+                        }
+                    />
 
                     <Route path="/draw" element={<><Draw /><Footer /></>} />
                     <Route path="/community" element={<><Community /><Footer /></>} />
-                    <Route path="/contact" element={<><Contact /><Footer /></>} />
-
 
                     <Route path="/activity" element={<><Activities /><Footer /></>} />
                 </Routes>
