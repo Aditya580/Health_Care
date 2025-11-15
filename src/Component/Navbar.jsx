@@ -40,7 +40,7 @@ export default function Navbar() {
                 { href: "#home", label: "Home" },
                 { href: "/activity", label: "Activity" },
                 { href: "/community", label: "Community" },
-                { href: "#contact", label: "Contact" },
+                { href: "/contact", label: "Contact" },
               ].map((item, idx) => (
                 <a
                   key={idx}

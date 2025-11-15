@@ -14,6 +14,7 @@ import {useRef} from "react";
 import Login from "./Component/Login.jsx";
 import SignUp from "./Component/SignUp.jsx";
 import ChatBot from "./Component/ChatBot.jsx";
+import Contact from "./Component/Contact.jsx";
 
 // Lazy imports for heavy routes
 const StoriesPage = lazy(() => import("./pages/StoriesPage.jsx"));
@@ -72,6 +73,8 @@ function App() {
 
                     <Route path="/draw" element={<><Draw /><Footer /></>} />
                     <Route path="/community" element={<><Community /><Footer /></>} />
+                    <Route path="/contact" element={<><Contact /><Footer /></>} />
+
 
                     <Route path="/activity" element={<><Activities /><Footer /></>} />
                 </Routes>
