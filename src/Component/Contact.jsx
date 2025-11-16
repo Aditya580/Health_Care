@@ -1,5 +1,5 @@
 // src/components/Contact.jsx
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { collection, query, onSnapshot, doc, setDoc, addDoc, getDocs, serverTimestamp, orderBy, where } from "firebase/firestore";
 import { db } from "../firebase/firebase"; // your firebase export
 import { FaVideo, FaPhone, FaPaperPlane, FaMicrophone, FaRegClock } from "react-icons/fa";
@@ -68,9 +68,9 @@ export default function Contact({ currentUser }) {
     return () => unsub();
   }, []);
 
-  // -------------------------
+  // ----------------------------------------
   // When doctor selected -> create/open chat
-  // -------------------------
+  // ----------------------------------------
   useEffect(() => {
     if (!selectedDoctor || !currentUser) return;
     // chatId pattern: userId_doctorId (keeps one chat per pair)
@@ -160,9 +160,9 @@ export default function Contact({ currentUser }) {
     typingTimeout.current = setTimeout(() => userTyping(false), 3000);
   };
 
-  // -------------------------
+  // ------------------------------
   // Voice recorder (MediaRecorder)
-  // -------------------------
+  // ------------------------------
   const startRecording = async () => {
     if (!navigator.mediaDevices) {
       alert("Recording not supported in this browser.");
@@ -223,9 +223,9 @@ export default function Contact({ currentUser }) {
     } catch (e) { console.error(e); alert("Booking failed"); }
   };
 
-  // -------------------------
+  // ------------------------------
   // Symptom Checker (simple rules)
-  // -------------------------
+  // ------------------------------
   const [symptomText, setSymptomText] = useState("");
   const [symptomResult, setSymptomResult] = useState(null);
 

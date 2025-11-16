@@ -133,8 +133,9 @@ function App() {
                     <Route path="/community" element={<><Community /><Footer /></>} />
                     <Route path="/contact" element={<><Contact /><Footer /></>} />
 
-
                     <Route path="/activity" element={<><Activities /><Footer /></>} />
+
+                    <Route path="/tetris" element={<Tetris />} />
                 </Routes>
             </Suspense>
         </Router>
