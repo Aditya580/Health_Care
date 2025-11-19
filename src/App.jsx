@@ -1,5 +1,5 @@
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import {Suspense, lazy} from "react";
+import {Suspense, lazy, useState} from "react";
 import Navbar from "./Component/Navbar";
 import Hero from "./Component/Hero";
 import Tips from "./Component/Tips.jsx";
@@ -13,6 +13,7 @@ import {useIsVisible} from "./hooks/useIsVisible.jsx";
 import {useRef} from "react";
 import ChatBot from "./Component/ChatBot.jsx";
 import Contact from "./Component/Contact.jsx";
+import SignIn from "./authentication/AuthModel.jsx";
 
 // Lazy imports for heavy routes
 const StoriesPage = lazy(() => import("./pages/StoriesPage.jsx"));
@@ -41,6 +42,7 @@ function SectionWrapper({children}) {
 }
 
 function App() {
+    const [showLogin, setShowLogin] = useState(false);
     return (
         <Router>
             <ScrollToTop />
@@ -50,15 +52,26 @@ function App() {
                     <Route
                         path="/"
                         element={
-                            <div className="flex flex-col items-center">
-                                <Navbar />
-                                <SectionWrapper><Hero /></SectionWrapper>
-                                <SectionWrapper><Activities /></SectionWrapper>
-                                <SectionWrapper><Tips /></SectionWrapper>
-                                <SectionWrapper><Tracker /></SectionWrapper>
-                                <Footer />
-                                <ChatBot />
-                            </div>
+                            <>
+                                {showLogin && <SignIn onClose={() => setShowLogin(false)} />}
+                                <div className="flex flex-col items-center">
+                                    <Navbar onLoginClick={() => setShowLogin(true)} />
+                                    <SectionWrapper>
+                                        <Hero />
+                                    </SectionWrapper>
+                                    <SectionWrapper>
+                                        <Activities />
+                                    </SectionWrapper>
+                                    <SectionWrapper>
+                                        <Tips />
+                                    </SectionWrapper>
+                                    <SectionWrapper>
+                                        <Tracker />
+                                    </SectionWrapper>
+                                    <Footer />
+                                    <ChatBot />
+                                </div>
+                            </>
                         }
                     />
 
@@ -129,11 +142,43 @@ function App() {
                         }
                     />
 
-                    <Route path="/draw" element={<><Draw /><Footer /></>} />
-                    <Route path="/community" element={<><Community /><Footer /></>} />
-                    <Route path="/contact" element={<><Contact /><Footer /></>} />
+                    <Route
+                        path="/draw"
+                        element={
+                            <>
+                                <Draw />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/community"
+                        element={
+                            <>
+                                <Community />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/contact"
+                        element={
+                            <>
+                                <Contact />
+                                <Footer />
+                            </>
+                        }
+                    />
 
-                    <Route path="/activity" element={<><Activities /><Footer /></>} />
+                    <Route
+                        path="/activity"
+                        element={
+                            <>
+                                <Activities />
+                                <Footer />
+                            </>
+                        }
+                    />
 
                     <Route path="/tetris" element={<Tetris />} />
                 </Routes>
